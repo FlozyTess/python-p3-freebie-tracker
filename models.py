@@ -14,9 +14,11 @@ class Freebie(Base):
     
     id = Column(Integer, primary_key=True)
     item_name = Column(String, nullable=False)
-    value = column(Integer, nullable=False)
-    
+    value = Column(Integer, nullable=False)
 
+ #Foreign keys
+  dev_id = Column(Integer,ForeignKey("devs.id"))
+  Company-id = Column(Integer,ForeignKey("companies.id"))
 class Company(Base):
     __tablename__ = 'companies'
 
