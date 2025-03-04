@@ -9,6 +9,14 @@ metadata = MetaData(naming_convention=convention)
 
 Base = declarative_base(metadata=metadata)
 
+class Freebie(Base):
+    __tablename__ = "freebies"
+    
+    id = Column(Integer, primary_key=True)
+    item_name = Column(String, nullable=False)
+    value = column(Integer, nullable=False)
+    
+
 class Company(Base):
     __tablename__ = 'companies'
 
@@ -27,3 +35,5 @@ class Dev(Base):
 
     def __repr__(self):
         return f'<Dev {self.name}>'
+
+       
