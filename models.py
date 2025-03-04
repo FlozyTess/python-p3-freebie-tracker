@@ -19,6 +19,11 @@ class Freebie(Base):
  #Foreign keys
   dev_id = Column(Integer,ForeignKey("devs.id"))
   Company-id = Column(Integer,ForeignKey("companies.id"))
+
+  #Relationships
+  dev = relationship("Dev",back_populates="freebies")
+  Company = relationship("Company",back_populates="freebies")
+  
 class Company(Base):
     __tablename__ = 'companies'
 
