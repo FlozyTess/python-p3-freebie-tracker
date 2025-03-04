@@ -23,7 +23,10 @@ class Freebie(Base):
   #Relationships
   dev = relationship("Dev",back_populates="freebies")
   Company = relationship("Company",back_populates="freebies")
-  
+
+    def __repr__(self):
+        return f'Freebie<{self.item_name},Value:{self.value}>'
+
 class Company(Base):
     __tablename__ = 'companies'
 
@@ -31,8 +34,11 @@ class Company(Base):
     name = Column(String())
     founding_year = Column(Integer())
 
+ #Relationship to freebie
+  freebies = relationship("Freebie",back_populates="company")
+   
     def __repr__(self):
-        return f'<Company {self.name}>'
+        return f'<Company {self.name},Founded: {self.founding_year}>'
 
 class Dev(Base):
     __tablename__ = 'devs'
@@ -40,6 +46,8 @@ class Dev(Base):
     id = Column(Integer(), primary_key=True)
     name= Column(String())
 
+  #Relationship to Freebie
+  freebies = relationship("Freebie",back_populates="dev")
     def __repr__(self):
         return f'<Dev {self.name}>'
 
