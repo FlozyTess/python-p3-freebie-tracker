@@ -17,7 +17,8 @@ depends_on = None
 
 
 def upgrade() -> None:
-     op.create_table(
+    # Create 'freebies' table
+    op.create_table(
         'freebies',
         sa.Column('id', sa.Integer, primary_key=True),   # Unique ID for each freebie
         sa.Column('item_name', sa.String, nullable=False),  # Name of the freebie
@@ -25,8 +26,10 @@ def upgrade() -> None:
         sa.Column('dev_id', sa.Integer, sa.ForeignKey('devs.id'), nullable=False),  # Link to the Dev table
         sa.Column('company_id', sa.Integer, sa.ForeignKey('companies.id'), nullable=False)  # Link to the Company table
      )
-    pass
+    
 
 
 def downgrade() -> None:
-    pass
+    # Drop 'freebies' table if rolling back
+    op.drop_table('freebies')  
+    
