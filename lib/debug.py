@@ -6,7 +6,7 @@ from models import session,Company, Dev,Freebie
 
 if __name__ == '__main__':
     engine = create_engine('sqlite:///freebies.db')
-    import ipdb; ipdb.set_trace()
+    #import ipdb; ipdb.set_trace()
     # Test Dev 
     njeri = session.query(Dev).filter_by(name="Njeri").first()
     if njeri:
