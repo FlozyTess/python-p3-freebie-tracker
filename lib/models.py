@@ -25,9 +25,24 @@ class Company(Base):
     name = Column(String(),nullable=False)
     founding_year = Column(Integer(),nullable=False)
 
+    # Relationship a company can give multiple freebies
     freebies = relationship("Freebie", backref="company")
+    # Relationship: A company can have with multiple devs (through freebies)
+    devs = relationship('Dev', secondary='freebies', back_populates='companies')
+
     def __repr__(self):
         return f'<Company {self.name}>'
+
+    def give_freebie(self, session, dev, item_name, value):
+        """Creates a new freebie given to a developer by this company."""
+        new_freebie = Freebie(item_name=item_name, value=value, dev=dev, company=self)
+        session.add(new_freebie)
+        session.commit()
+
+    @classmethod
+    def oldest_company(cls, session):
+        """Finds and returns the oldest company."""
+        return session.query(cls).order_by(cls.founding_year).first()
 
 class Dev(Base):
     __tablename__ = 'devs'
