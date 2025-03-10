@@ -1,9 +1,8 @@
-from sqlalchemy import create_engine, inspect
-from models import Base
+from models import session, Company, Dev, Freebie
 
-# Connect to the database
-engine = create_engine("sqlite:///freebies.db")  # Change if using PostgreSQL
-inspector = inspect(engine)
+# Test Company creation
+company = Company(name="Google", founding_year=1998)
+session.add(company)
+session.commit()
 
-# Get the list of tables
-print(inspector.get_table_names())  # Expected output: ['companies', 'devs', 'freebies']
+print(session.query(Company).all())  # returns the company object

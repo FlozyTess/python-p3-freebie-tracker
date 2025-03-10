@@ -1,13 +1,18 @@
 from sqlalchemy import create_engine,ForeignKey, Column, Integer, String, MetaData
-from sqlalchemy.orm import DeclarativeBase,relationship, backref
+from sqlalchemy.orm import DeclarativeBase,relationship, backref,sessionmaker
 
 convention = {
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
 }
 metadata = MetaData(naming_convention=convention)
-
+#Base class
 class Base(DeclarativeBase):
     metadata = metadata
+
+    # Database connection
+engine = create_engine("sqlite:///freebies.db")
+Session = sessionmaker(bind=engine)
+session = Session() 
 
 class Freebie(Base):
     __tablename__ = "freebies"
@@ -17,6 +22,9 @@ class Freebie(Base):
     dev_id = Column(Integer(), ForeignKey("devs.id"))
     company_id = Column(Integer, ForeignKey("companies.id"))
 
+    def print_details(self):
+        """Returns a formatted string with freebie details."""
+        return f"{self.dev.name} owns a {self.item_name} from {self.company.name}"
 
 
 class Company(Base):
