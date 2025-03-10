@@ -14,6 +14,8 @@ class Base(DeclarativeBase):
 # Database connection
 engine = create_engine("sqlite:///freebies.db")
 Session = sessionmaker(bind=engine)
+session = Session() 
+
 
 # Many-to-Many association table
 dev_company_association = Table(
@@ -85,3 +87,6 @@ class Dev(Base):
         if freebie in self.freebies:
             freebie.dev = dev
             session.commit()
+
+Base.metadata.create_all(engine)
+__all__ = ["session", "Company", "Dev", "Freebie"]
