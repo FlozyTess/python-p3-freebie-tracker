@@ -18,6 +18,7 @@ class Freebie(Base):
     company_id = Column(Integer, ForeignKey("companies.id"))
 
 
+
 class Company(Base):
     __tablename__ = 'companies'
 
@@ -49,9 +50,21 @@ class Dev(Base):
 
     id = Column(Integer(), primary_key=True)
     name= Column(String())
-
+    # Relationship: A dev can have multiple freebies
     freebies = relationship("Freebie", backref="dev")
     def __repr__(self):
         return f'<Dev {self.name}>'
+    # Relationship: A dev can be linked to multiple companies (through freebies)
+    companies = relationship('Company', secondary='freebies', back_populates='devs')
+
+    def received_one(self, item_name):
+        """Checks if the dev has received a freebie with a specific name."""
+        return any(freebie.item_name == item_name for freebie in self.freebies)
+
+    def give_away(self, dev, freebie):
+        """Transfers a freebie from this dev to another dev."""
+        if freebie in self.freebies:
+            freebie.dev = dev
+            session.commit()
 
 
