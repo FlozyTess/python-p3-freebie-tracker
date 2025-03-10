@@ -37,7 +37,9 @@ class Freebie(Base):
 
     def __repr__(self):
         return f'<Freebie {self.item_name}, Value: {self.value}>'
-
+    def print_details(self):
+        """Returns a formatted string with freebie details."""
+        return f"{self.dev.name} owns a {self.item_name} from {self.company.name}"
 class Company(Base):
     __tablename__ = 'companies'
 
