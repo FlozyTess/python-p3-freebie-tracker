@@ -20,8 +20,8 @@ session = Session()
 # Many-to-Many association table
 dev_company_association = Table(
     "dev_company", Base.metadata,
-    Column("dev_id", Integer, ForeignKey("devs.id")),
-    Column("company_id", Integer, ForeignKey("companies.id"))
+    Column("dev_id", Integer, ForeignKey("devs.id"),primary_key=True),
+    Column("company_id", Integer, ForeignKey("companies.id"),primary_key=True)
 )
 
 class Freebie(Base):
@@ -89,4 +89,4 @@ class Dev(Base):
             session.commit()
 
 Base.metadata.create_all(engine)
-__all__ = ["session", "Company", "Dev", "Freebie"]
+__all__ = ["Company", "Dev", "Freebie","dev_company_association"]
